@@ -15,4 +15,8 @@ public class PrescriptionMedicaments
     
     [MaxLength(100)]
     public string Details { get; set; }
+    
+    
+    public Medicament Medicament { get; set; } = null!;
+    public Prescription Prescription { get; set; } = null!;
 }

@@ -17,9 +17,9 @@ namespace WebApplication1.Controllers
         }
         
         [HttpPost("addPrescription")]
-        public async Task<IActionResult> AddPrescription([FromBody] PrescriptionInfoDto prescription)
+        public async Task<IActionResult> AddPrescription([FromBody] RequestPrescriptionInfoDto requestPrescription)
         {
-            if (prescription == null)
+            if (requestPrescription == null)
             {
                 return BadRequest("Prescription data is required.");
             }
@@ -27,7 +27,7 @@ namespace WebApplication1.Controllers
             int newId;
             try
             {
-                newId = await _dbService.AddPrescription(prescription);
+                newId = await _dbService.AddPrescription(requestPrescription);
             }
             catch (NotFoundException e)
             {
@@ -37,7 +37,28 @@ namespace WebApplication1.Controllers
             {
                 return BadRequest(e.Message);
             }
-            return CreatedAtAction(nameof(AddPrescription), new { id = newId }, prescription);
+            return CreatedAtAction(nameof(AddPrescription), new { id = newId }, requestPrescription);
+        }
+        
+        [HttpGet("getPrescriptions/{patientId}")]
+        public async Task<IActionResult> GetPrescriptions(int patientId)
+        {
+            if (patientId <= 0)
+            {
+                return BadRequest("Invalid patient ID.");
+            }
+            
+            PatientPrescriptionsInfoDto prescriptions;
+            try
+            {
+                prescriptions = await _dbService.GetPrescriptions(patientId);
+            }
+            catch (NotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
+            
+            return Ok(prescriptions);
         }
      
         

@@ -4,7 +4,7 @@ using WebApplication1.Models;
 
 namespace WebApplication1.DTOs;
 
-public class PrescriptionInfoDto
+public class RequestPrescriptionInfoDto
 {
     public PatientDto Patient { get; set; }
     public ICollection<MedicamentDto> Medicaments { get; set; }
