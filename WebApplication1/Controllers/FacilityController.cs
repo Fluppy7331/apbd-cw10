@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TutorialWebApp.Exceptions;
 using WebApplication1.DTOs;
+using WebApplication1.Exceptions;
 using WebApplication1.Services;
 
 namespace WebApplication1.Controllers
@@ -11,11 +12,12 @@ namespace WebApplication1.Controllers
     public class FacilityController : ControllerBase
     {
         private readonly IDbService _dbService;
+
         public FacilityController(IDbService dbService)
         {
             _dbService = dbService;
         }
-        
+
         [HttpPost("addPrescription")]
         public async Task<IActionResult> AddPrescription([FromBody] RequestPrescriptionInfoDto requestPrescription)
         {
@@ -23,7 +25,7 @@ namespace WebApplication1.Controllers
             {
                 return BadRequest("Prescription data is required.");
             }
-            
+
             int newId;
             try
             {
@@ -31,15 +33,18 @@ namespace WebApplication1.Controllers
             }
             catch (NotFoundException e)
             {
+                Console.WriteLine("tu jestem");
                 return NotFound(e.Message);
             }
             catch (ConflictException e)
             {
+                Console.WriteLine("albo tu?");
                 return BadRequest(e.Message);
             }
-            return CreatedAtAction(nameof(AddPrescription), new { id = newId }, requestPrescription);
+
+            return CreatedAtAction(nameof(AddPrescription), new { newPrescriptionId = newId });
         }
-        
+
         [HttpGet("getPrescriptions/{patientId}")]
         public async Task<IActionResult> GetPrescriptions(int patientId)
         {
@@ -47,7 +52,7 @@ namespace WebApplication1.Controllers
             {
                 return BadRequest("Invalid patient ID.");
             }
-            
+
             PatientPrescriptionsInfoDto prescriptions;
             try
             {
@@ -57,14 +62,8 @@ namespace WebApplication1.Controllers
             {
                 return NotFound(e.Message);
             }
-            
+
             return Ok(prescriptions);
         }
-     
-        
-        
-        
-        
-        
     }
 }

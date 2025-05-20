@@ -7,9 +7,10 @@ namespace WebApplication1.DTOs;
 public class RequestPrescriptionInfoDto
 {
     public PatientDto Patient { get; set; }
-    public ICollection<MedicamentDto> Medicaments { get; set; }
+    public ICollection<MedicamentPrescriptionDto> Medicaments { get; set; }
     public DateTime Date { get; set; }
     public DateTime DueDate { get; set; }
+    public int IdDoctor { get; set; }
 }
 public class PatientDto
 {
@@ -18,10 +19,9 @@ public class PatientDto
     public string LastName { get; set; } 
     public DateTime BirthDate { get; set; }
 }
-public class MedicamentDto
+public class MedicamentPrescriptionDto
 {
     public int IdMedicament { get; set; }
-    public string Name { get; set; }
-    public string Description { get; set; } 
-    public string Type { get; set; } 
+    public int Dose { get; set; }
+    public string Details { get; set; }
 }
