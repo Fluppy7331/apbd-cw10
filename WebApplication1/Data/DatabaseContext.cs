@@ -63,31 +63,26 @@ public class DatabaseContext : DbContext
             a.Property(e => e.Type).HasMaxLength(100);
         });
         
-        // Dodanie danych do tabeli Patient
         modelBuilder.Entity<Patient>().HasData(new List<Patient>
         {
             new Patient { IdPatient = 1, FirstName = "Jan", LastName = "Kowalski", BirthDate = new DateTime(1980, 1, 1) }
         });
-
-// Dodanie danych do tabeli Doctor
+        
         modelBuilder.Entity<Doctor>().HasData(new List<Doctor>
         {
             new Doctor { IdDoctor = 1, FirstName = "AAA", LastName = "Nowak", Email = "aaa@nowak.pl" }
         });
-
-// Dodanie danych do tabeli Prescription
+        
         modelBuilder.Entity<Prescription>().HasData(new List<Prescription>
         {
             new Prescription { IdPrescription = 1, Date = new DateTime(2012, 1, 1), DueDate = new DateTime(2012, 1, 1), IdPatient = 1, IdDoctor = 1 }
         });
-
-// Dodanie danych do tabeli Medicament
+        
         modelBuilder.Entity<Medicament>().HasData(new List<Medicament>
         {
             new Medicament { IdMedicament = 1, Name = "AAA", Description = "AAA", Type = "Pill" }
         });
-
-// Dodanie danych do tabeli PrescriptionMedicaments
+        
         modelBuilder.Entity<PrescriptionMedicaments>().HasData(new List<PrescriptionMedicaments>
         {
             new PrescriptionMedicaments { IdMedicament = 1, IdPrescription = 1, Dose = 10, Details = "Take one pill daily" }
